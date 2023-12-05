@@ -4,7 +4,7 @@ import { v4 as uuidV4 } from "uuid";
 const userSchema = new Schema(
   {
     user_uuid: {
-      type: true,
+      type: String,
       required: true,
       default: () => uuidV4(),
       unique: true,
@@ -26,6 +26,7 @@ const userSchema = new Schema(
       type: String,
       required: true,
     },
+    otpCode: { type: String, unique: true },
   },
   { timestamps: true }
 );

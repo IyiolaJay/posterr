@@ -5,9 +5,10 @@ export const ErrInvalidEmail = new Error("Invalid email");
 export const ErrInvalidPassword = new Error("Invalid Password");
 export const ErrInvalidUserToken = new Error("Invalid user token");
 export const ErrTokenIsRequired = new Error("User auth token is required");
+export const ErrInvalidOTP = new Error("Invalid OTP");
 
 
-//422
+//406
 export const ErrEmailAlreadyExists = new Error("Email already exists");
 
 
@@ -20,8 +21,6 @@ export const ErrOrderNotFound = new Error("Order not found");
 //401
 export const ErrUnauthorized = new Error("User not authorized");
 
-//406
-export const ErrIncompleteFields = new Error("Missing key fields");
 
 //500
 export const ErrInternalServer = new Error("Internal server error");
@@ -32,10 +31,11 @@ export const getErrorMessage = (error) => {
     let code  = 0;
 
     switch(error){
-        case  ErrInvalidEmail:
+        case ErrInvalidEmail:
         case ErrInvalidPassword:
         case ErrInvalidUserToken:
         case ErrTokenIsRequired:
+        case ErrInvalidOTP:
             code = 400;
             break;
         
@@ -50,7 +50,7 @@ export const getErrorMessage = (error) => {
             code = 404;
             break;
 
-        case ErrIncompleteFields:
+        case ErrEmailAlreadyExists:
             code = 406;
             break;
 
