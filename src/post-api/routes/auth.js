@@ -1,4 +1,5 @@
 import { Router } from "express";
+
 import { validateRequest } from "../utils/api.utils.js";
 import {
   forgotPasswordValidator,
@@ -12,6 +13,7 @@ import {
   forgotPassword,
   userLogin,
 } from "../controllers/auth.js";
+
 
 const routes = Router();
 
@@ -27,5 +29,6 @@ routes.post(
   validateRequest(updatePasswordValidator),
   changeUserPassword
 );
+
 
 export default routes;

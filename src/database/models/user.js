@@ -25,8 +25,16 @@ const userSchema = new Schema(
     password: {
       type: String,
       required: true,
+      default : "generated-password"
     },
-    otpCode: { type: String, unique: true },
+    otpCode: { 
+      type: String, 
+      unique: true,
+      default: () => Math.floor(Math.random()*10), 
+      index: {
+        expires: 84600,
+      },
+    },
   },
   { timestamps: true }
 );

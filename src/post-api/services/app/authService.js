@@ -39,7 +39,7 @@ const createUserAccountService = async (userReq) => {
  * @param (email & password )
  * @returns user object & Token
  */
-export const userLoginService = async (email, password) => {
+ const userLoginService = async (email, password) => {
   const findUser = await User.findOne({ email });
   if (!findUser) throw ErrUserNotFound;
 
@@ -61,7 +61,7 @@ export const userLoginService = async (email, password) => {
  * @param (email )
  * @returns null
  */
-export const forgotPasswordService = async (email) => {
+ const forgotPasswordService = async (email) => {
   const user = await User.findOne({ email }).select("_id").lean();
   if (!user) throw ErrUserNotFound;
   const otpCode = await generateAndSendOTP(email);
@@ -83,15 +83,39 @@ const changeUserPasswordService = async (code, password) => {
 
   await User.updateOne(
     { _id: user._id },
-    { password: hp, otpCode: null },
+    { password: hp, $unset: { otpCode: 1 } },
     { new: true }
   );
   return;
 };
+
+const socialAuthService = async (userObj )=>{
+  let findUser;
+  findUser = await User.findOne({ email : userObj.email });
+
+  if(!findUser){
+   findUser = await User.create({
+      email: userObj.email,
+      firstName: userObj.firstName,
+      lastName: userObj.lastName,
+      user_uuid : userObj.id,
+    });
+
+  }
+  const payload = {
+    _id: findUser._id,
+    user_uuid: findUser.user_uuid,
+  };
+
+  const token = await generateAuthToken(payload);
+
+  return {token , user : findUser.email}
+}
 
 export const AuthService = {
   createUserAccountService,
   userLoginService,
   forgotPasswordService,
   changeUserPasswordService,
+  socialAuthService,
 };
