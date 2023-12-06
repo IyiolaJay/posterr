@@ -4,7 +4,7 @@ import { v4 as uuidV4 } from "uuid";
 const categorySchema = new Schema(
   {
     category_uuid: {
-      type: true,
+      type: String,
       required: true,
       default: () => uuidV4(),
       unique: true,

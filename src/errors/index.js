@@ -10,6 +10,8 @@ export const ErrInvalidOTP = new Error("Invalid OTP");
 
 //406
 export const ErrEmailAlreadyExists = new Error("Email already exists");
+export const ErrResourceAlreadyExists = new Error("Resource already exists");
+export const ErrMissingKeyFields = new Error("Missing Key Fields");
 
 
 //404
@@ -51,6 +53,8 @@ export const getErrorMessage = (error) => {
             break;
 
         case ErrEmailAlreadyExists:
+        case ErrResourceAlreadyExists:
+        case ErrMissingKeyFields:
             code = 406;
             break;
 

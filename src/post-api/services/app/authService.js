@@ -89,6 +89,11 @@ const changeUserPasswordService = async (code, password) => {
   return;
 };
 
+/**
+ * @description  google sign in
+ * @param (userObj )
+ * @returns token and user data
+ */
 const socialAuthService = async (userObj )=>{
   let findUser;
   findUser = await User.findOne({ email : userObj.email });
