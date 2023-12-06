@@ -11,7 +11,7 @@ routes.get("/post/all", allPosts);
 routes.get("/post/:postId", getSinglePost);
 routes.put("/post/create", validateRequest(createPostValidator), authenticateUser ,createPost);
 routes.patch("/post/edit/:postId", validateRequest(editPostValidator), authenticateUser, editPost);
-routes.patch("/post/delete/:postId",  authenticateUser, deletePost);
+routes.delete("/post/delete/:postId",  authenticateUser, deletePost);
 
 
 

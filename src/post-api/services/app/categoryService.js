@@ -13,7 +13,9 @@ import {
 const createCategoryService = async (userReq) => {
   const { title } = userReq;
 
-  const category = await Category.findOne({ title });
+  const category = await Category.findOne({
+    title: { $regex: new RegExp(title, "i") },
+  });
   if (category) throw ErrResourceAlreadyExists;
 
   const newCategory = await Category.create({
@@ -22,7 +24,6 @@ const createCategoryService = async (userReq) => {
 
   return newCategory;
 };
-
 
 /**
  * @description  Fetch all Category
@@ -35,8 +36,6 @@ const allCategoriesService = async () => {
     .lean();
   return categories;
 };
-
-
 
 /**
  * @description  Edit Category
@@ -55,7 +54,6 @@ const editCategoryService = async (categoryId, userReq) => {
   if (!category) throw ErrResourceNotFound;
   return category;
 };
-
 
 /**
  * @description  Delete Category

@@ -23,7 +23,10 @@ const categorySchema = new Schema(
 );
 
 
-
+categorySchema.pre('save', function (next) {
+  this.title = this.title.toLowerCase();
+  next();
+});
 const Category = model("Categories", categorySchema);
 
 export default Category;

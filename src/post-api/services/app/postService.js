@@ -1,24 +1,37 @@
 import Category from "../../../database/models/category.js";
 import Post from "../../../database/models/post.js";
-import { ErrMissingKeyFields, ErrResourceNotFound,  ErrCategoryNotFound} from "../../../errors/index.js";
-
+import {
+  ErrMissingKeyFields,
+  ErrResourceNotFound,
+  ErrCategoryNotFound,
+} from "../../../errors/index.js";
+import { getIo } from "../../../../socket.js";
 
 /**
- * @description Create Post 
+ * @description Create Post
  * @param (userReq Object & userId)
  * @returns Created Post
  */
 export const createPostService = async (userReq, userId) => {
+  const { category } = userReq;
 
-    const {category} = userReq;
-
-    const categoryExists = await Category.findOne({ title : category}).select("_id").lean();
-    if(!categoryExists) throw ErrCategoryNotFound;
+  //findOne method with case insensitive search
+  const categoryExists = await Category.findOne({
+    title: { $regex: new RegExp(category, "i") },
+  })
+    .select("_id")
+    .lean();
+  if (!categoryExists) throw ErrCategoryNotFound;
 
   const post = await Post.create({
     ...userReq,
     userId: userId,
   });
+
+
+  // socket.io instance for real time updates
+  const io = getIo();
+  io.emit("updateTotalPosts", { totalPosts: await Post.countDocuments() });
 
   return { post };
 };
@@ -38,13 +51,12 @@ const allPostsService = async () => {
  * @param (userId, postId)
  * @returns Single Post
  */
-const getSinglePostService = async(userId, postId)=>{
-    if(!userId || postId) throw ErrMissingKeyFields;
-    const post = Post.findOne({ post_uuid : postId, userId : userId})
-    if(!post) throw ErrResourceNotFound;
-    return {post};
-}
-
+const getSinglePostService = async (postId) => {
+  if (!postId) throw ErrMissingKeyFields;
+  const post = await Post.findOne({ post_uuid: postId,}).lean();
+  if (!post) throw ErrResourceNotFound;
+  return post;
+};
 
 /**
  * @description  Edit Post
@@ -57,7 +69,7 @@ const editPostService = async (postId, userReq, id) => {
 
   const post = await Post.findOneAndUpdate(
     //included user_id so other authorized/unauthorized users cannot delete another users post
-    { post_uuid: postId, userId : id }, 
+    { post_uuid: postId, userId: id },
     { ...userReq },
     { new: true }
   );
@@ -65,21 +77,20 @@ const editPostService = async (postId, userReq, id) => {
   return post;
 };
 
-
 /**
  * @description  Delete Post
  * @param (Post_uuid, userId)
  * @returns null
  */
 const deletePostService = async (postId, userId) => {
-    const post = await Post.findOne({ post_uuid: postId , userId : userId})
-      .select("_id")
-      .lean();
-  
-    if (!post) throw ErrResourceNotFound;
-    await Post.deleteOne({ _id: post._id });
-    return;
-  };
+  const post = await Post.findOne({ post_uuid: postId, userId: userId })
+    .select("_id")
+    .lean();
+
+  if (!post) throw ErrResourceNotFound;
+  await Post.deleteOne({ _id: post._id });
+  return;
+};
 
 export const PostService = {
   createPostService,

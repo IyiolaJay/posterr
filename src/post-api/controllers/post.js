@@ -21,9 +21,8 @@ export const createPost = async (req, res) => {
 export const getSinglePost =async(req, res)=>{
   try{
     const postId = req.params.postId;
-    const _id = req.user._id;
 
-    const post = await PostService.getSinglePostService(_id, postId);
+    const post = await PostService.getSinglePostService( postId);
     return res.status(200).json({
       message: "Success",
       post: post,
