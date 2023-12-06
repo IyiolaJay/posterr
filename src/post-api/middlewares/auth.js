@@ -1,11 +1,11 @@
-import { ErrInvalidUserToken, getErrorMessage } from "../../errors/index.js";
+import { ErrTokenIsRequired, getErrorMessage } from "../../errors/index.js";
 import { verifyAuthToken } from "../services/security/tokenService.js";
 
 
 const _getAuthToken = (req) => {
   const authHeader = req.get("Authorization");
   if (!authHeader || authHeader.split(" ")[0] !== "Bearer") {
-    throw ErrInvalidUserToken;
+    throw ErrTokenIsRequired;
   }
   return authHeader.split(" ")[1];
 };

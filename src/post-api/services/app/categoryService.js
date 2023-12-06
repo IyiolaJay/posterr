@@ -2,6 +2,7 @@ import Category from "../../../database/models/category.js";
 import {
   ErrResourceAlreadyExists,
   ErrResourceNotFound,
+  ErrMissingKeyFields,
 } from "../../../errors/index.js";
 
 /**

@@ -4,7 +4,7 @@ import { v4 as uuidV4 } from "uuid";
 const postSchema = new Schema(
   {
     post_uuid: {
-      type: true,
+      type: String,
       required: true,
       default: () => uuidV4(),
       unique: true,
@@ -31,6 +31,6 @@ const postSchema = new Schema(
 );
 
 
-const Post = model("Users", postSchema);
+const Post = model("Posts", postSchema);
 
 export default Post;

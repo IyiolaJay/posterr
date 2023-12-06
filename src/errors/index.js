@@ -3,7 +3,6 @@
 //400
 export const ErrInvalidEmail = new Error("Invalid email");
 export const ErrInvalidPassword = new Error("Invalid Password");
-export const ErrInvalidUserToken = new Error("Invalid user token");
 export const ErrTokenIsRequired = new Error("User auth token is required");
 export const ErrInvalidOTP = new Error("Invalid OTP");
 
@@ -18,7 +17,7 @@ export const ErrMissingKeyFields = new Error("Missing Key Fields");
 export const ErrResourceNotFound = new Error("Resource not found");
 export const ErrUserNotFound = new Error("No user found");
 export const ErrRequestNotFound = new Error("Request not found")
-export const ErrOrderNotFound = new Error("Order not found");
+export const ErrCategoryNotFound = new Error("Category not found");
 
 //401
 export const ErrUnauthorized = new Error("User not authorized");
@@ -35,7 +34,6 @@ export const getErrorMessage = (error) => {
     switch(error){
         case ErrInvalidEmail:
         case ErrInvalidPassword:
-        case ErrInvalidUserToken:
         case ErrTokenIsRequired:
         case ErrInvalidOTP:
             code = 400;
@@ -48,7 +46,7 @@ export const getErrorMessage = (error) => {
         case ErrResourceNotFound:
         case ErrUserNotFound:
         case ErrRequestNotFound:
-        case ErrOrderNotFound:
+        case ErrCategoryNotFound:
             code = 404;
             break;
 
