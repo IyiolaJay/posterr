@@ -26,12 +26,12 @@ const createUserAccountService = async (userReq) => {
 
   const hp = await hashPassword(password);
 
-  const newCustomer = await User.create({
+  const newUser = await User.create({
     ...userReq,
     password: hp,
   });
 
-  return newCustomer;
+  return newUser;
 };
 
 /**
