@@ -36,9 +36,8 @@ To use the API, send requests to the appropriate endpoints with the necessary pa
 
 ## End Points
 
-`PUT  /api/v1/sign-up`  `public`
-
 ### Create an account.
+`PUT  /api/v1/sign-up`  `public`
 
 - Request body
 ```js
@@ -50,9 +49,8 @@ To use the API, send requests to the appropriate endpoints with the necessary pa
 }
 ```
 
-
-`POST  /api/v1/sign-in`  `public`
 ### Login user account
+`POST  /api/v1/sign-in`  `public`
 
 - Request body
 ```js
@@ -61,9 +59,13 @@ To use the API, send requests to the appropriate endpoints with the necessary pa
     "password" : "testingPassword"
 }
 ```
+### Sign in With Google
+- The url to be pasted in a browser `http://localhost:{port}/api/v1/auth/google`, this returns an auth token and user email.
 
-`POST  api/v1/user/reset`  `requires auth`
+`GET  /auth/google` 
+
 ### Get Password Reset Token
+`POST  api/v1/user/reset`  `requires auth`
 
 - Request body
 ```js
@@ -72,9 +74,8 @@ To use the API, send requests to the appropriate endpoints with the necessary pa
 }
 ```
 
-
-`POST  api/v1/user/change/{token}`  `requires auth`
 ### Change Password
+`POST  api/v1/user/change/{token}`  `requires auth`
 
 - Request body
 ```js
@@ -83,9 +84,8 @@ To use the API, send requests to the appropriate endpoints with the necessary pa
 }
 ```
 
-
-`POST  api/v1/category/create`  `requires auth`
 ### Create Category
+`POST  api/v1/category/create`  `requires auth`
 
 - Request body
 ```js
@@ -95,16 +95,16 @@ To use the API, send requests to the appropriate endpoints with the necessary pa
 }
 ```
 
-`GET  api/v1/category/all`  `public`
 ### Get all Categories
+`GET  api/v1/category/all`  `public`
 
 - Request body
 ```js
 null
 ```
 
-`PATCH  api/v1/category/edit/{category_uuid}`  `requires auth`
 ### Edit a category
+`PATCH  api/v1/category/edit/{category_uuid}`  `requires auth`
 
 - Request body
 ```js
@@ -114,8 +114,9 @@ null
 }
 ```
 
-`DELETE  api/v1/category/delete/{category_uuid}`  `requires auth`
+
 ### Delete a category
+`DELETE  api/v1/category/delete/{category_uuid}`  `requires auth`
 
 - Request body
 ```js
@@ -123,8 +124,8 @@ null
 ```
 
 
-`PUT  api/v1/post/create`  `requires auth`
 ### Create post
+`PUT  api/v1/post/create`  `requires auth`
 
 - Request body
 ```js
@@ -136,24 +137,24 @@ null
 ```
 
 
-`GET  api/v1/post/all`  `public`
 ### Get all Posts
+`GET  api/v1/post/all`  `public`
 
 - Request body
 ```js
 null
 ```
 
-`GET  api/v1/post/{post_uuid}`  `public`
 ### Get a Post
+`GET  api/v1/post/{post_uuid}`  `public`
 
 - Request body
 ```js
 null
 ```
 
-`PATCH  api/v1/post/edit/{post_uuid}`  `requires auth`
 ### Edit a post
+`PATCH  api/v1/post/edit/{post_uuid}`  `requires auth`
 
 - Request body
 ```js
@@ -163,8 +164,8 @@ null
 }
 ```
 
-`DELETE  api/v1/post/delete/{post_uuid}`  `requires auth`
 ### Delete a post
+`DELETE  api/v1/post/delete/{post_uuid}`  `requires auth`
 
 - Request body
 ```js
