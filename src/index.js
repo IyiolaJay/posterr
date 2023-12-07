@@ -1,4 +1,4 @@
-import { init } from '../socket.js';
+import { init } from './socket.js';
 import expressApp from './app.js';
 import { connectToDatabase } from './database/index.js';
 

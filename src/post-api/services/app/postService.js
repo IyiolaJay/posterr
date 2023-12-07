@@ -5,7 +5,7 @@ import {
   ErrResourceNotFound,
   ErrCategoryNotFound,
 } from "../../../errors/index.js";
-import { getIo } from "../../../../socket.js";
+import { getIo } from "../../../socket.js";
 
 /**
  * @description Create Post
